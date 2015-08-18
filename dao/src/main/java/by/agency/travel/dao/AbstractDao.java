@@ -19,7 +19,7 @@ public abstract class AbstractDao<T> implements GenericDao<T> {
 
 	@Override
 	public boolean create(T object) {
-		LOGGER.debug("Run create method");
+		LOGGER.debug("Run create method, object=" + object);
 		Connection connection = null;
 		PreparedStatement statement = null;
 		boolean isCreated = false;
@@ -39,7 +39,7 @@ public abstract class AbstractDao<T> implements GenericDao<T> {
 
 	@Override
 	public T read(T object) {
-		LOGGER.debug("Run read method");
+		LOGGER.debug("Run read method, object=" + object);
 		T result = null;
 		Connection connection = null;
         PreparedStatement statement = null;

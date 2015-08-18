@@ -14,24 +14,24 @@ public class TourServiceImpl implements TourService{
 	
 	
 	public TourServiceImpl(GenericDao<Tour> dao) {
-		LOGGER.debug("Run TourServiceImpl method");
+		LOGGER.info("Run TourServiceImpl method");
 		this.dao = dao;
 	}
 
 	public List<Tour> findTours() {
-		LOGGER.debug("Run findTour method");
+		LOGGER.info("Run findTour method");
 		return dao.readAll();
 	}
 
 	public Tour findTourById(int id) {
-		LOGGER.debug("Run findTourById method");
+		LOGGER.info("Run findTourById method, id=" + id);
 		Tour tour = new Tour();
 		tour.setId(id);
 		return dao.read(tour);
 	}
 
 	public boolean addTour(String heading, String text, int duration, int price) {
-		LOGGER.debug("Run addTour method");
+		LOGGER.info("Run addTour method");
 		Tour tour = new Tour();
 		tour.setHeading(heading);
 		tour.setText(text);

@@ -16,12 +16,12 @@ public class UserServiceImpl implements UserService{
 	private GenericDao<User> dao;
 	
 	public UserServiceImpl(GenericDao<User> dao){
-		LOGGER.debug("Run UserServiceImpl method");
+		LOGGER.info("Run UserServiceImpl method");
 		this.dao = dao;
 	}
 
 	public User findUser(String login, String pass) {
-		LOGGER.debug("Run findUser method");
+		LOGGER.info("Run findUser method, login=" + login);
 		User enteredUser = new User();
 		enteredUser.setLogin(login);
 		String md5Pass = md5Apache(pass);
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	private String md5Apache(String pass){
-		LOGGER.debug("Run md5Apache method");
+		LOGGER.info("Run md5Apache method");
 		return DigestUtils.md5Hex(pass);
 	}
 }

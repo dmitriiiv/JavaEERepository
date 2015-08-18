@@ -13,12 +13,12 @@ public class RoleServiceImpl implements RoleService{
 	private GenericDao<Role> dao;
 	
 	public RoleServiceImpl(GenericDao<Role> dao){
-		LOGGER.debug("Run RoleServiceImpl method");
+		LOGGER.info("Run RoleServiceImpl method");
 		this.dao = dao;
 	}
 
 	public List<Role> findRoles() {
-		LOGGER.debug("Run findRoles method");
+		LOGGER.info("Run findRoles method");
 		return dao.readAll();
 	}
 	

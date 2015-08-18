@@ -91,7 +91,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao{
 	
 	@Override
 	public List<Role> findRoles(int userId){
-		LOGGER.debug("Run findRoles method");
+		LOGGER.debug("Run findRoles method, id=" + userId);
 		List<Role> result = null;
 		Connection connection = null;
         PreparedStatement statement = null;
@@ -112,7 +112,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao{
 
 	@Override
 	public void addRole(int userID, int roleId) {
-		LOGGER.debug("Run addRole method");
+		LOGGER.debug("Run addRole method, userId=" + userID + ", roleId=" + roleId);
 		Connection connection = null;
 		PreparedStatement statement = null;
 		try{

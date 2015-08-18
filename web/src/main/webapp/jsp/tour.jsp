@@ -22,7 +22,7 @@
 						</ul>
 						<form class="navbar-form navbar-right" method="post"
 							action="controller">
-							<input type="hidden" name="command" value="add_news">
+							<input type="hidden" name="command" value="add_tour">
 							<c:forEach var="role" items="${sessionScope.user.roles}">
 								<c:if test="${role.id == 1 }" >
 								<button type="submit" class="btn btn-default">

@@ -5,10 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import by.agency.travel.dao.GenericDao;
 import by.agency.travel.dao.impl.TourDaoImpl;
 import by.agency.travel.dao.impl.UserDaoImpl;
-import by.agency.travel.entity.Tour;
 import by.agency.travel.entity.User;
 import by.agency.travel.service.TourService;
 import by.agency.travel.service.UserService;
@@ -27,9 +25,8 @@ public class LoginCommand implements ActionCommand{
         User user = getUser(request);
         if (user != null) {
             request.getSession().setAttribute("user", user);
-            GenericDao<Tour> dao = TourDaoImpl.getInstance();
-            synchronized (dao) {
-            	TourService service = new TourServiceImpl(dao);
+            TourService service = new TourServiceImpl(TourDaoImpl.getInstance());
+            synchronized (service) {
                 request.setAttribute("tourList", service.findTours());
 			}
             page = PAGE.getProperty("path.page.tour.list");
@@ -48,9 +45,8 @@ public class LoginCommand implements ActionCommand{
         if (login == null || pass == null) {
         	user = (User) request.getSession().getAttribute("user");
         } else if(isValid(login)){
-        	GenericDao<User> dao = UserDaoImpl.getInstance();
-        	synchronized (dao) {
-        		UserService userService = new UserServiceImpl(dao);
+        	UserService userService = new UserServiceImpl(UserDaoImpl.getInstance());
+        	synchronized (userService) {
                 user = userService.findUser(login, pass);
 			}
         }

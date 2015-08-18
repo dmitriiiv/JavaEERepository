@@ -7,9 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import by.agency.travel.dao.GenericDao;
 import by.agency.travel.dao.impl.TourDaoImpl;
-import by.agency.travel.entity.Tour;
 import by.agency.travel.service.TourService;
 import by.agency.travel.service.impl.TourServiceImpl;
 
@@ -43,9 +41,8 @@ public class SaveTourCommand implements ActionCommand{
 	     int duration = Integer.parseInt(request.getParameter("duration"));
 	     int price = Integer.parseInt(request.getParameter("price"));
 	     if(isValid(heading, text, duration, price)){
-	    	 GenericDao<Tour> dao = TourDaoImpl.getInstance();
-	    	 synchronized (dao) {
-	    		 TourService service = new TourServiceImpl(dao);
+	    	 TourService service = new TourServiceImpl(TourDaoImpl.getInstance());
+	    	 synchronized (service) {
 			     return service.addTour(heading, text, duration, price);
 			}
 	     } else {

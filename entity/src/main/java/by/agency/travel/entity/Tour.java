@@ -1,6 +1,9 @@
 package by.agency.travel.entity;
 
-public class Tour {
+import java.io.Serializable;
+
+public class Tour implements Serializable{
+	private static final long serialVersionUID = 2632896625047356589L;
 	private int id;
 	private String heading;
 	private String text;

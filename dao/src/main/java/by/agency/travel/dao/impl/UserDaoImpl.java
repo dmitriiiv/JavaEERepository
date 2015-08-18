@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import by.agency.travel.dao.AbstractDao;
 import by.agency.travel.dao.UserDao;
 import by.agency.travel.dao.pool.ConnectionPool;
@@ -21,11 +23,13 @@ import by.agency.travel.entity.User;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao{
 	private static UserDaoImpl instance;
+	private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
 	
 	private UserDaoImpl(){
 	}
 
 	public synchronized static UserDaoImpl getInstance(){
+		LOGGER.debug("Run getInstance method");
 		if(instance == null){
 			instance = new UserDaoImpl();
 		}
@@ -34,6 +38,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao{
 
 	@Override
 	protected void setParameters(String methodName, Statement statement, User object) throws SQLException {
+		LOGGER.debug("Run setParameters method");
 		if(methodName.equals(METHOD_NAME_CREATE)){
 			((PreparedStatement) statement).setString(1, object.getLogin());
 			((PreparedStatement) statement).setString(2, object.getPass());
@@ -45,6 +50,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao{
 
 	@Override
 	protected String getSql(String methodName) {
+		LOGGER.debug("Run getSql method");
 		if(methodName.equals(METHOD_NAME_CREATE)){
 			return SQL_REQUEST.getProperty("sql.create.user");
 		} else if(methodName.equals(METHOD_NAME_READ)){
@@ -58,16 +64,20 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao{
 
 	@Override
 	protected User create(ResultSet resultSet) throws SQLException {
-		User user = new User();
-		resultSet.next();
-		user.setId(resultSet.getInt(PARAM_USER_ID));
-		user.setLogin(resultSet.getString(PARAM_USER_LOGIN));
-		user.setPass(resultSet.getString(PARAM_USER_PASS));
+		LOGGER.debug("Run create method");
+		User user = null;
+		if(resultSet.next()){
+			user = new User();
+			user.setId(resultSet.getInt(PARAM_USER_ID));
+			user.setLogin(resultSet.getString(PARAM_USER_LOGIN));
+			user.setPass(resultSet.getString(PARAM_USER_PASS));
+		}
 		return user;
 	}
 
 	@Override
 	protected List<User> createList(ResultSet resultSet) throws SQLException {
+		LOGGER.debug("Run createList method");
 		List<User> users = new ArrayList<User>();
 		while(resultSet.next()){
 			User user = new User();
@@ -81,6 +91,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao{
 	
 	@Override
 	public List<Role> findRoles(int userId){
+		LOGGER.debug("Run findRoles method");
 		List<Role> result = null;
 		Connection connection = null;
         PreparedStatement statement = null;
@@ -92,7 +103,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao{
 			resultSet = statement.executeQuery();
 			result = createListRoles(resultSet);
         } catch (SQLException e) {
-            e.printStackTrace();
+        	LOGGER.error("TechnicalException", e);
         } finally {
             DBUtils.close(connection, statement, resultSet);
         }
@@ -101,6 +112,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao{
 
 	@Override
 	public void addRole(int userID, int roleId) {
+		LOGGER.debug("Run addRole method");
 		Connection connection = null;
 		PreparedStatement statement = null;
 		try{
@@ -110,13 +122,14 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao{
 			statement.setInt(2, roleId);
 			statement.executeUpdate();
 		} catch (SQLException e){
-			e.printStackTrace();
+			LOGGER.error("TechnicalException", e);
 		} finally {
 			DBUtils.close(connection, statement);
 		}
 	}
 	
 	private List<Role> createListRoles(ResultSet resultSet) throws SQLException{
+		LOGGER.debug("Run createListRoles method");
 		List<Role> roles = new ArrayList<Role>();
 		while(resultSet.next()){
 			Role role = new Role();

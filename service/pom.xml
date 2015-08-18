@@ -14,6 +14,7 @@
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+     <jdk.version>1.7</jdk.version>
   </properties>
   <dependencies>
     <dependency>
@@ -22,5 +23,29 @@
       <version>4.12</version>
       <scope>test</scope>
     </dependency>
+    <!-- Entity -->
+   	<dependency>
+    	<groupId>by.agency.travel</groupId>
+    	<artifactId>entity</artifactId>
+    	<version>1.0</version>
+    </dependency>
+    <!-- Dao -->
+   	<dependency>
+    	<groupId>by.agency.travel</groupId>
+    	<artifactId>dao</artifactId>
+    	<version>1.0</version>
+    </dependency>
+    <!-- MD5 -->
+    <dependency>
+    	<groupId>commons-codec</groupId>
+    	<artifactId>commons-codec</artifactId>
+    	<version>1.9</version>
+    </dependency>
+    <!-- JMock -->
+    <dependency>
+  		<groupId>org.jmock</groupId>
+  		<artifactId>jmock-junit4</artifactId>
+  		<version>2.8.1</version>
+	</dependency>
   </dependencies>
 </project>

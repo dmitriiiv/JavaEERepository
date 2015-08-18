@@ -7,31 +7,39 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import by.agency.travel.dao.pool.ConnectionPool;
 import by.agency.travel.dao.util.DBUtils;
 
 import static by.agency.travel.dao.util.Constants.*;
 
 public abstract class AbstractDao<T> implements GenericDao<T> {
+	private static final Logger LOGGER = Logger.getLogger(AbstractDao.class);
 
 	@Override
-	public void create(T object) {
+	public boolean create(T object) {
+		LOGGER.debug("Run create method");
 		Connection connection = null;
 		PreparedStatement statement = null;
+		boolean isCreated = false;
 		try{
 			connection = ConnectionPool.getInstance().getConnection();
 			statement = connection.prepareStatement(getSql(METHOD_NAME_CREATE));
 			setParameters(METHOD_NAME_CREATE, statement, object);
 			statement.executeUpdate();
+			isCreated = true;
 		} catch (SQLException e){
-			e.printStackTrace();
+			LOGGER.error("TechnicalException", e);
 		} finally {
 			DBUtils.close(connection, statement);
 		}
+		return isCreated;
 	}
 
 	@Override
 	public T read(T object) {
+		LOGGER.debug("Run read method");
 		T result = null;
 		Connection connection = null;
         PreparedStatement statement = null;
@@ -43,7 +51,7 @@ public abstract class AbstractDao<T> implements GenericDao<T> {
 			resultSet = statement.executeQuery();
 			result = create(resultSet);
         } catch (SQLException e) {
-            e.printStackTrace();
+        	LOGGER.error("TechnicalException", e);
         } finally {
             DBUtils.close(connection, statement, resultSet);
         }
@@ -52,6 +60,7 @@ public abstract class AbstractDao<T> implements GenericDao<T> {
 
 	@Override
 	public List<T> readAll() {
+		LOGGER.debug("Run readAll method");
 		List<T> result = null;
 		Connection connection = null;
         Statement statement = null;
@@ -62,7 +71,7 @@ public abstract class AbstractDao<T> implements GenericDao<T> {
 			resultSet = statement.executeQuery(getSql(METHOD_NAME_READ_ALL));
 			result = createList(resultSet);
         } catch (SQLException e) {
-            e.printStackTrace();
+        	LOGGER.error("TechnicalException", e);
         } finally {
             DBUtils.close(connection, statement, resultSet);
         }

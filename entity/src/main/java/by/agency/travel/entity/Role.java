@@ -1,6 +1,9 @@
 package by.agency.travel.entity;
 
-public class Role {
+import java.io.Serializable;
+
+public class Role implements Serializable{
+	private static final long serialVersionUID = 2516728215910802677L;
 	private int id;
 	private String name;
 	

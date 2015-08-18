@@ -5,9 +5,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.log4j.Logger;
+
 public class DBUtils {
+	private static final Logger LOGGER = Logger.getLogger(DBUtils.class);
+	
 	public static void close(Connection connection, Statement statement, ResultSet resultSet) {
-        try {
+        LOGGER.debug("Run close method");
+		try {
             if (resultSet != null) {
                 resultSet.close();
             }
@@ -18,7 +23,7 @@ public class DBUtils {
                 connection.close();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+        	LOGGER.error("TechnicalException", e);
         }
     }
 

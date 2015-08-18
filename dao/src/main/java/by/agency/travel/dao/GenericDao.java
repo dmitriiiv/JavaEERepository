@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface GenericDao<T> {
 	
-	void create(T object);
+	boolean create(T object);
 	
 	T read(T object);
 	

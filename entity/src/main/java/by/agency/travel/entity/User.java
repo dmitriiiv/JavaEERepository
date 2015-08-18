@@ -1,9 +1,11 @@
 package by.agency.travel.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements Serializable{
+	private static final long serialVersionUID = -5826833143357610172L;
 	private int id;
 	private String login;
 	private String pass;

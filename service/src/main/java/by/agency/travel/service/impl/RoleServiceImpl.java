@@ -5,8 +5,10 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import by.agency.travel.dao.GenericDao;
+import by.agency.travel.dao.exception.DaoException;
 import by.agency.travel.entity.Role;
 import by.agency.travel.service.RoleService;
+import by.agency.travel.service.exception.ServiceException;
 
 public class RoleServiceImpl implements RoleService{
 	private static final Logger LOGGER = Logger.getLogger(RoleServiceImpl.class);
@@ -17,9 +19,14 @@ public class RoleServiceImpl implements RoleService{
 		this.dao = dao;
 	}
 
-	public List<Role> findRoles() {
+	public List<Role> findRoles() throws ServiceException {
 		LOGGER.info("Run findRoles method");
-		return dao.readAll();
+		try {
+			return dao.readAll();
+		} catch (DaoException e) {
+			LOGGER.error("Cannot find all roles", e);
+			throw new ServiceException("Cannot all find all roles", e);
+		}
 	}
 	
 }

@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 
 import by.agency.travel.dao.impl.TourDaoImpl;
 import by.agency.travel.service.TourService;
+import by.agency.travel.service.exception.ServiceException;
 import by.agency.travel.service.impl.TourServiceImpl;
 
 import static by.agency.travel.web.util.PropertiesManager.*;
@@ -20,11 +21,11 @@ public class SaveTourCommand implements ActionCommand{
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		LOGGER.debug("Run execute method");
 		String page;
-        if (isAdditionNews(request)) {
+        if (isAdditionTour(request)) {
             try {
                 response.sendRedirect("controller?command=login");
             } catch (IOException e) {
-            	LOGGER.error("TechnicalException", e);
+            	LOGGER.error("Error redirect", e);
             }
             page = PAGE.getProperty("path.page.tour.list");
         } else {
@@ -34,7 +35,7 @@ public class SaveTourCommand implements ActionCommand{
         return page;
 	}
 
-	private boolean isAdditionNews(HttpServletRequest request) {
+	private boolean isAdditionTour(HttpServletRequest request) {
 		 LOGGER.debug("Run isAdditionNews method");
 		 String heading = request.getParameter("heading");
 	     String text = request.getParameter("text");
@@ -43,11 +44,14 @@ public class SaveTourCommand implements ActionCommand{
 	     if(isValid(heading, text, duration, price)){
 	    	 TourService service = new TourServiceImpl(TourDaoImpl.getInstance());
 	    	 synchronized (service) {
-			     return service.addTour(heading, text, duration, price);
+			     try {
+					return service.addTour(heading, text, duration, price);
+				} catch (ServiceException e) {
+					LOGGER.error("Error addition tour", e);
+				}
 			}
-	     } else {
-	    	 return false;
-	     }
+	     } 
+	     return false;
 	}
 	
 	private boolean isValid(String heading, String text, int duration, int price){

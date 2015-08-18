@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import by.agency.travel.dao.impl.TourDaoImpl;
 import by.agency.travel.service.TourService;
+import by.agency.travel.service.exception.ServiceException;
 import by.agency.travel.service.impl.TourServiceImpl;
 
 import static by.agency.travel.web.util.PropertiesManager.PAGE;
@@ -20,7 +21,11 @@ public class TourCommand implements ActionCommand{
 		TourService service = new TourServiceImpl(TourDaoImpl.getInstance());
 		synchronized (service) {
 	        int tourId = Integer.parseInt(request.getParameter("id"));
-	        request.setAttribute("tour", service.findTourById(tourId));
+	        try {
+				request.setAttribute("tour", service.findTourById(tourId));
+			} catch (ServiceException e) {
+				LOGGER.error("Error execute method", e);
+			}
 		}
         return PAGE.getProperty("path.page.tour");
 	}

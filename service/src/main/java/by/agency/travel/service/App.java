@@ -7,12 +7,13 @@ import java.util.Scanner;
 import by.agency.travel.dao.impl.TourDaoImpl;
 import by.agency.travel.dao.impl.UserDaoImpl;
 import by.agency.travel.entity.Tour;
+import by.agency.travel.service.exception.ServiceException;
 import by.agency.travel.service.impl.TourServiceImpl;
 import by.agency.travel.service.impl.UserServiceImpl;
 
 public class App 
 {
-    public static void main( String[] args )
+    public static void main( String[] args ) throws ServiceException
     {
     	Scanner in = new Scanner(System.in);
     	int choice;
@@ -49,7 +50,7 @@ public class App
     	System.out.println(MESSAGE.getProperty("title"));
     }
     
-    private static void login(Scanner scanner){
+    private static void login(Scanner scanner) throws ServiceException{
     	UserService service = new UserServiceImpl(UserDaoImpl.getInstance());
     	System.out.println(MESSAGE.getProperty("input.user.login"));
     	String login = scanner.next();
@@ -58,21 +59,21 @@ public class App
     	System.out.println(service.findUser(login, pass));
     }
     
-    private static void findTours(){
+    private static void findTours() throws ServiceException{
     	TourService service = new TourServiceImpl(TourDaoImpl.getInstance());
     	for(Tour tour : service.findTours()){
     		System.out.println(tour);
     	}
     }
     
-    private static void findTourById(Scanner scanner){
+    private static void findTourById(Scanner scanner) throws ServiceException{
     	TourService service = new TourServiceImpl(TourDaoImpl.getInstance());
     	System.out.println(MESSAGE.getProperty("input.tour.id"));
     	int tourId = scanner.nextInt();
     	System.out.println(service.findTourById(tourId));
     }
     
-    private static void addTour(Scanner scanner){
+    private static void addTour(Scanner scanner) throws ServiceException{
     	TourService service = new TourServiceImpl(TourDaoImpl.getInstance());
     	System.out.println(MESSAGE.getProperty("input.tour.heading"));
     	String heading = scanner.next();

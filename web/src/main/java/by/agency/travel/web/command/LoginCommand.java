@@ -10,6 +10,7 @@ import by.agency.travel.dao.impl.UserDaoImpl;
 import by.agency.travel.entity.User;
 import by.agency.travel.service.TourService;
 import by.agency.travel.service.UserService;
+import by.agency.travel.service.exception.ServiceException;
 import by.agency.travel.service.impl.TourServiceImpl;
 import by.agency.travel.service.impl.UserServiceImpl;
 
@@ -27,7 +28,11 @@ public class LoginCommand implements ActionCommand{
             request.getSession().setAttribute("user", user);
             TourService service = new TourServiceImpl(TourDaoImpl.getInstance());
             synchronized (service) {
-                request.setAttribute("tourList", service.findTours());
+                try {
+					request.setAttribute("tourList", service.findTours());
+				} catch (ServiceException e) {
+					LOGGER.error("Error execute method", e);
+				}
 			}
             page = PAGE.getProperty("path.page.tour.list");
         } else {
@@ -47,7 +52,11 @@ public class LoginCommand implements ActionCommand{
         } else if(isValid(login)){
         	UserService userService = new UserServiceImpl(UserDaoImpl.getInstance());
         	synchronized (userService) {
-                user = userService.findUser(login, pass);
+                try {
+					user = userService.findUser(login, pass);
+				} catch (ServiceException e) {
+					LOGGER.error("Error getUser method", e);
+				}
 			}
         }
         return user;

@@ -3,6 +3,7 @@ package by.agency.travel.dao;
 import java.util.List;
 import java.util.Scanner;
 
+import by.agency.travel.dao.exception.DaoException;
 import by.agency.travel.dao.impl.RoleDaoImpl;
 import by.agency.travel.dao.impl.TourDaoImpl;
 import by.agency.travel.dao.impl.UserDaoImpl;
@@ -15,7 +16,7 @@ import static by.agency.travel.dao.util.PropertiesManager.*;
 
 public class App 
 {
-    public static void main( String[] args )
+    public static void main( String[] args ) throws DaoException
     {
     	Scanner in = new Scanner(System.in);
     	int choice;
@@ -73,7 +74,7 @@ public class App
     	System.out.println(MESSAGE.getProperty("title"));
     }
     
-    private static void addUser(Scanner scanner){
+    private static void addUser(Scanner scanner) throws DaoException{
     	User user = new User();
     	System.out.println(MESSAGE.getProperty("input.user.login"));
     	String login = scanner.next();
@@ -85,11 +86,11 @@ public class App
         user.setPass(pass);
         GenericDao<User> userDao = UserDaoImpl.getInstance();
         userDao.create(user);
-        user = userDao.read(user);
+		user = userDao.read(user);
         ((UserDao)userDao).addRole(user.getId(), roleId);
     }
     
-    private static void findUser(Scanner scanner){
+    private static void findUser(Scanner scanner) throws DaoException{
     	User user = new User();
     	System.out.println(MESSAGE.getProperty("input.user.login"));
     	String login = scanner.next();
@@ -104,7 +105,7 @@ public class App
         System.out.println(newUser);
     }
     
-    private static void findAllUsers(){
+    private static void findAllUsers() throws DaoException{
     	GenericDao<User> userDao = UserDaoImpl.getInstance();
     	List<User> users = userDao.readAll();
     	for(User user: users){
@@ -132,7 +133,7 @@ public class App
     	}
     }
     
-    private static void addTour(Scanner scanner){
+    private static void addTour(Scanner scanner) throws DaoException{
     	Tour tour = new Tour();
     	System.out.println(MESSAGE.getProperty("input.tour.heading"));
     	String heading = scanner.next();
@@ -150,7 +151,7 @@ public class App
         tourDao.create(tour);
     }
     
-    private static void findTour(Scanner scanner){
+    private static void findTour(Scanner scanner) throws DaoException{
     	Tour tour = new Tour();
     	System.out.println(MESSAGE.getProperty("input.tour.id"));
     	int id = scanner.nextInt();
@@ -160,7 +161,7 @@ public class App
         System.out.println(newTour);
     }
     
-    private static void findAllTours(){
+    private static void findAllTours() throws DaoException{
     	GenericDao<Tour> tourDao = TourDaoImpl.getInstance();
     	List<Tour> tours = tourDao.readAll();
         for(Tour tour: tours){
@@ -168,7 +169,7 @@ public class App
         }
     }
     
-    private static void addRole(Scanner scanner){
+    private static void addRole(Scanner scanner) throws DaoException{
     	Role role = new Role();
     	System.out.println(MESSAGE.getProperty("input.role.name"));
     	String name = scanner.next();
@@ -177,7 +178,7 @@ public class App
         roleDao.create(role);
     }
     
-    private static void findRole(Scanner scanner){
+    private static void findRole(Scanner scanner) throws DaoException{
     	Role role = new Role();
     	System.out.println(MESSAGE.getProperty("input.role.id"));
     	int id = scanner.nextInt();
@@ -187,7 +188,7 @@ public class App
         System.out.println(newRole);
     }
     
-    private static void findAllRoles(){
+    private static void findAllRoles() throws DaoException{
     	GenericDao<Role> roleDao = RoleDaoImpl.getInstance();
     	List<Role> roles = roleDao.readAll();
         for(Role role: roles){

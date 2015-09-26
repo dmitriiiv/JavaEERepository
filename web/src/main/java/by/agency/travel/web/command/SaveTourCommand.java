@@ -7,7 +7,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import by.agency.travel.dao.impl.TourDaoImpl;
+import by.agency.travel.entity.Tour;
+import by.agency.travel.hibernate.dao.GenericDao;
+import by.agency.travel.hibernate.dao.impl.TourDaoImpl;
+import by.agency.travel.hibernate.dao.util.HibernateUtil;
 import by.agency.travel.service.TourService;
 import by.agency.travel.service.exception.ServiceException;
 import by.agency.travel.service.impl.TourServiceImpl;
@@ -21,7 +24,7 @@ public class SaveTourCommand implements ActionCommand{
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		LOGGER.debug("Run execute method");
 		String page;
-        if (isAdditionTour(request)) {
+        if (isAdditionTour(request) != 0) {
             try {
                 response.sendRedirect("controller?command=login");
             } catch (IOException e) {
@@ -35,14 +38,16 @@ public class SaveTourCommand implements ActionCommand{
         return page;
 	}
 
-	private boolean isAdditionTour(HttpServletRequest request) {
+	private Integer isAdditionTour(HttpServletRequest request) {
 		 LOGGER.debug("Run isAdditionNews method");
 		 String heading = request.getParameter("heading");
 	     String text = request.getParameter("text");
 	     int duration = Integer.parseInt(request.getParameter("duration"));
 	     int price = Integer.parseInt(request.getParameter("price"));
 	     if(isValid(heading, text, duration, price)){
-	    	 TourService service = new TourServiceImpl(TourDaoImpl.getInstance());
+	    	 GenericDao<Tour> dao = TourDaoImpl.getInstance();
+	    	 dao.setSessionFactory(HibernateUtil.getSessionFactory());
+	    	 TourService service = new TourServiceImpl(dao);
 	    	 synchronized (service) {
 			     try {
 					return service.addTour(heading, text, duration, price);
@@ -51,7 +56,7 @@ public class SaveTourCommand implements ActionCommand{
 				}
 			}
 	     } 
-	     return false;
+	     return 0;
 	}
 	
 	private boolean isValid(String heading, String text, int duration, int price){

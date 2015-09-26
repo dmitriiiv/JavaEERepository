@@ -53,10 +53,9 @@
 										key="addition.label.duration" /></label>
 
 								<div class="col-md-8">
-									<input type="text" class="form-control" id="inputDuration"
-										name="duration" maxlength="3"
-										placeholder="<fmt:message key="addition.duration.placeholder"/>"
-										required>
+									<input type="number" class="form-control" id="inputDuration"
+									 placeholder="<fmt:message key="addition.duration.placeholder"/>"
+									 min="1" max="999" step="1" required>
 								</div>
 							</div>
 							<div class="form-group">
@@ -64,10 +63,9 @@
 										key="addition.label.price" /></label>
 
 								<div class="col-md-10">
-									<input type="text" class="form-control" id="inputPrice"
-										name="price" maxlength="9"
-										placeholder="<fmt:message key="addition.price.placeholder"/>" 
-										required>
+									<input type="number" class="form-control" id="inputPrice"
+									placeholder="<fmt:message key="addition.price.placeholder"/>"
+									min="0" max="999999999" step="1000" required>
 								</div>
 							</div>
 							<textarea class="form-control" name="text" maxlength="65535"

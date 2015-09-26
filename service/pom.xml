@@ -32,7 +32,7 @@
     <!-- Dao -->
    	<dependency>
     	<groupId>by.agency.travel</groupId>
-    	<artifactId>dao</artifactId>
+    	<artifactId>hibernate-dao</artifactId>
     	<version>1.0</version>
     </dependency>
     <!-- MD5 -->

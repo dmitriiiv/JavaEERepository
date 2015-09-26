@@ -5,9 +5,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import by.agency.travel.dao.impl.TourDaoImpl;
-import by.agency.travel.dao.impl.UserDaoImpl;
+import by.agency.travel.entity.Tour;
 import by.agency.travel.entity.User;
+import by.agency.travel.hibernate.dao.GenericDao;
+import by.agency.travel.hibernate.dao.UserDao;
+import by.agency.travel.hibernate.dao.impl.TourDaoImpl;
+import by.agency.travel.hibernate.dao.impl.UserDaoImpl;
+import by.agency.travel.hibernate.dao.util.HibernateUtil;
 import by.agency.travel.service.TourService;
 import by.agency.travel.service.UserService;
 import by.agency.travel.service.exception.ServiceException;
@@ -26,7 +30,9 @@ public class LoginCommand implements ActionCommand{
         User user = getUser(request);
         if (user != null) {
             request.getSession().setAttribute("user", user);
-            TourService service = new TourServiceImpl(TourDaoImpl.getInstance());
+            GenericDao<Tour> dao = TourDaoImpl.getInstance();
+            dao.setSessionFactory(HibernateUtil.getSessionFactory());
+            TourService service = new TourServiceImpl(dao);
             synchronized (service) {
                 try {
 					request.setAttribute("tourList", service.findTours());
@@ -50,7 +56,9 @@ public class LoginCommand implements ActionCommand{
         if (login == null || pass == null) {
         	user = (User) request.getSession().getAttribute("user");
         } else if(isValid(login)){
-        	UserService userService = new UserServiceImpl(UserDaoImpl.getInstance());
+        	UserDao dao = UserDaoImpl.getInstance();
+        	dao.setSessionFactory(HibernateUtil.getSessionFactory());
+        	UserService userService = new UserServiceImpl(dao);
         	synchronized (userService) {
                 try {
 					user = userService.findUser(login, pass);

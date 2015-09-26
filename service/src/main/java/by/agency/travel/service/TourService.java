@@ -10,7 +10,7 @@ public interface TourService {
 	List<Tour> findTours() throws ServiceException;
 	
 	Tour findTourById(int id) throws ServiceException;
-	
-	boolean addTour(String heading, String text, int duration, int price) throws ServiceException;
+
+	Integer addTour(String heading, String text, int duration, int price) throws ServiceException;
 
 }

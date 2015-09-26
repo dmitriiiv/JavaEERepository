@@ -2,11 +2,13 @@ package by.agency.travel.service;
 
 import static by.agency.travel.service.util.PropertiesManager.MESSAGE;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-import by.agency.travel.dao.impl.TourDaoImpl;
-import by.agency.travel.dao.impl.UserDaoImpl;
 import by.agency.travel.entity.Tour;
+import by.agency.travel.hibernate.dao.impl.TourDaoImpl;
+import by.agency.travel.hibernate.dao.impl.UserDaoImpl;
 import by.agency.travel.service.exception.ServiceException;
 import by.agency.travel.service.impl.TourServiceImpl;
 import by.agency.travel.service.impl.UserServiceImpl;

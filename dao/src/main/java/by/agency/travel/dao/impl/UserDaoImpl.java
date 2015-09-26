@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 
 import by.agency.travel.dao.AbstractDao;
 import by.agency.travel.dao.UserDao;
+import by.agency.travel.dao.exception.DaoException;
 import by.agency.travel.dao.pool.ConnectionPool;
 import by.agency.travel.dao.util.DBUtils;
 
@@ -90,7 +91,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao{
 	}
 	
 	@Override
-	public List<Role> findRoles(int userId){
+	public List<Role> findRoles(int userId) throws DaoException{
 		LOGGER.debug("Run findRoles method, id=" + userId);
 		List<Role> result = null;
 		Connection connection = null;
@@ -103,7 +104,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao{
 			resultSet = statement.executeQuery();
 			result = createListRoles(resultSet);
         } catch (SQLException e) {
-        	LOGGER.error("TechnicalException", e);
+        	LOGGER.error("Cannot find roles user witch id=" + userId, e);
+        	throw new DaoException("Cannot find roles user witch id=" + userId, e);
         } finally {
             DBUtils.close(connection, statement, resultSet);
         }
@@ -111,18 +113,19 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao{
 	}
 
 	@Override
-	public void addRole(int userID, int roleId) {
-		LOGGER.debug("Run addRole method, userId=" + userID + ", roleId=" + roleId);
+	public void addRole(int userId, int roleId) throws DaoException {
+		LOGGER.debug("Run addRole method, userId=" + userId + ", roleId=" + roleId);
 		Connection connection = null;
 		PreparedStatement statement = null;
 		try{
 			connection = ConnectionPool.getInstance().getConnection();
 			statement = connection.prepareStatement(SQL_REQUEST.getProperty("sql.create.user.role"));
-			statement.setInt(1, userID);
+			statement.setInt(1, userId);
 			statement.setInt(2, roleId);
 			statement.executeUpdate();
 		} catch (SQLException e){
-			LOGGER.error("TechnicalException", e);
+			LOGGER.error("Cannot add user (id=" + userId + "role (id=" + roleId + ")", e);
+			throw new DaoException("Cannot add user (id=" + userId + "role (id=" + roleId + ")", e);
 		} finally {
 			DBUtils.close(connection, statement);
 		}

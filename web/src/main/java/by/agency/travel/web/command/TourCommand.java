@@ -5,7 +5,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import by.agency.travel.dao.impl.TourDaoImpl;
+import by.agency.travel.entity.Tour;
+import by.agency.travel.hibernate.dao.GenericDao;
+import by.agency.travel.hibernate.dao.impl.TourDaoImpl;
+import by.agency.travel.hibernate.dao.util.HibernateUtil;
 import by.agency.travel.service.TourService;
 import by.agency.travel.service.exception.ServiceException;
 import by.agency.travel.service.impl.TourServiceImpl;
@@ -18,7 +21,9 @@ public class TourCommand implements ActionCommand{
 	@Override
 	public String execute(HttpServletRequest request, HttpServletResponse response) {
 		LOGGER.debug("Run execute method");
-		TourService service = new TourServiceImpl(TourDaoImpl.getInstance());
+		GenericDao<Tour> dao = TourDaoImpl.getInstance();
+		dao.setSessionFactory(HibernateUtil.getSessionFactory());
+		TourService service = new TourServiceImpl(dao);
 		synchronized (service) {
 	        int tourId = Integer.parseInt(request.getParameter("id"));
 	        try {

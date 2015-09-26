@@ -1,12 +1,14 @@
 package by.agency.travel.service.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import by.agency.travel.dao.GenericDao;
-import by.agency.travel.dao.exception.DaoException;
 import by.agency.travel.entity.Tour;
+import by.agency.travel.hibernate.dao.GenericDao;
+import by.agency.travel.hibernate.dao.exception.DaoException;
 import by.agency.travel.service.TourService;
 import by.agency.travel.service.exception.ServiceException;
 
@@ -20,6 +22,7 @@ public class TourServiceImpl implements TourService{
 		this.dao = dao;
 	}
 
+	@Override
 	public List<Tour> findTours() throws ServiceException {
 		LOGGER.info("Run findTour method");
 		try {
@@ -30,23 +33,23 @@ public class TourServiceImpl implements TourService{
 		}
 	}
 
+	@Override
 	public Tour findTourById(int id) throws ServiceException {
 		LOGGER.info("Run findTourById method, id=" + id);
-		Tour tour = new Tour();
-		tour.setId(id);
 		try {
-			return dao.read(tour);
+			return dao.read(id);
 		} catch (DaoException e) {
 			LOGGER.error("Cannot find tour by id = " + id, e);
 			throw new ServiceException("Cannot find tour by id = " + id, e);
 		}
 	}
 
-	public boolean addTour(String heading, String text, int duration, int price) throws ServiceException {
+	@Override
+	public Integer addTour(String heading, String text, int duration, int price) throws ServiceException {
 		LOGGER.info("Run addTour method");
 		Tour tour = new Tour();
 		tour.setHeading(heading);
-		tour.setText(text);
+		tour.setParagraphs(transformTextToParagraphs(text));
 		tour.setDuration(duration);
 		tour.setPrice(price);
 		try {
@@ -57,4 +60,8 @@ public class TourServiceImpl implements TourService{
 		}
 	}
 	
+	private List<String> transformTextToParagraphs(String text) {
+        String[] paragraphs = text.split("\n");
+        return new ArrayList<String>(Arrays.asList(paragraphs));
+    }
 }

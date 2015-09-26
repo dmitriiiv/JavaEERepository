@@ -115,7 +115,7 @@ public class App
         }
     }
     
-    private static void addUserRole(Scanner scanner){
+    private static void addUserRole(Scanner scanner) throws DaoException{
     	System.out.println(MESSAGE.getProperty("input.user.id"));
     	int userId = scanner.nextInt();
     	System.out.println(MESSAGE.getProperty("input.role.id"));
@@ -124,7 +124,7 @@ public class App
     	userDao.addRole(userId, roleId);
     }
     
-    private static void findUserRoles(Scanner scanner){
+    private static void findUserRoles(Scanner scanner) throws DaoException{
     	System.out.println(MESSAGE.getProperty("input.user.id"));
     	int userId = scanner.nextInt();
     	UserDao userDao = UserDaoImpl.getInstance();
@@ -138,13 +138,13 @@ public class App
     	System.out.println(MESSAGE.getProperty("input.tour.heading"));
     	String heading = scanner.next();
     	System.out.println(MESSAGE.getProperty("input.tour.text"));
-    	String text = scanner.next();
+    	//String text = scanner.next();
     	System.out.println(MESSAGE.getProperty("input.tour.duration"));
     	int duration = scanner.nextInt();
     	System.out.println(MESSAGE.getProperty("input.tour.price"));
     	int price = scanner.nextInt();
     	tour.setHeading(heading);
-    	tour.setText(text);
+    	//tour.setText(text);
     	tour.setDuration(duration);
     	tour.setPrice(price);
         GenericDao<Tour> tourDao = TourDaoImpl.getInstance();

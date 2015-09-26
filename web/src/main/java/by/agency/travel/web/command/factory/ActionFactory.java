@@ -22,7 +22,7 @@ public class ActionFactory {
             CommandEnum currentEnum = CommandEnum.valueOf(action.toUpperCase());
             current = currentEnum.getCurrentCommand();
         } catch (IllegalArgumentException e) {
-        	LOGGER.error("TechnicalException", e);
+        	LOGGER.error("ActionFactory exception in defineCommand method", e);
         }
         return current;
     }

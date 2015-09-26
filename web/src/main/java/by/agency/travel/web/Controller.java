@@ -49,7 +49,7 @@ public class Controller extends HttpServlet{
                 requestDispatcher.forward(request, response);
             }
         } catch (ServletException | IOException e) {
-            LOGGER.error("TechnicalException", e);
+            LOGGER.error("Controller exception in processRequest method", e);
         } 
 	}
 

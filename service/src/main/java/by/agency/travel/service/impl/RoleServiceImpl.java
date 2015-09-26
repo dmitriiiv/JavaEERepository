@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import by.agency.travel.dao.GenericDao;
-import by.agency.travel.dao.exception.DaoException;
 import by.agency.travel.entity.Role;
+import by.agency.travel.hibernate.dao.GenericDao;
+import by.agency.travel.hibernate.dao.exception.DaoException;
 import by.agency.travel.service.RoleService;
 import by.agency.travel.service.exception.ServiceException;
 

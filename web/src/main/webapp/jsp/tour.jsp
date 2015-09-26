@@ -37,7 +37,9 @@
 
 			<div class="article col-md-12">
 				<h1 class="h2 page-header">${requestScope.tour.heading}</h1>
-				<p>${requestScope.tour.text}</p>
+				<c:forEach var="paragraph" items="${requestScope.tour.paragraphs}">
+					 <p>${paragraph}</p>
+				</c:forEach>
 				<div class="row" style="font-weight: bolder">
 					<div class="col-md-6 page-header-author">
 						<p>

@@ -35,7 +35,7 @@ public class TourDaoImpl extends AbstractDao<Tour>{
 		LOGGER.debug("Run setParameters method");
 		if(methodName.equals(METHOD_NAME_CREATE)){
 			((PreparedStatement) statement).setString(1, object.getHeading());
-			((PreparedStatement) statement).setString(2, object.getText());
+			//((PreparedStatement) statement).setString(2, object.getText());
 			((PreparedStatement) statement).setInt(3, object.getDuration());
 			((PreparedStatement) statement).setInt(4, object.getPrice());
 		} else if(methodName.equals(METHOD_NAME_READ)){
@@ -64,7 +64,7 @@ public class TourDaoImpl extends AbstractDao<Tour>{
 		resultSet.next();
 		tour.setId(resultSet.getInt(PARAM_TOUR_ID));
 		tour.setHeading(resultSet.getString(PARAM_TOUR_HEADING));
-		tour.setText(resultSet.getString(PARAM_TOUR_TEXT));
+		//tour.setText(resultSet.getString(PARAM_TOUR_TEXT));
 		tour.setDuration(resultSet.getInt(PARAM_TOUR_DURATION));
 		tour.setPrice(resultSet.getInt(PARAM_TOUR_PRICE));
 		return tour;
@@ -78,7 +78,7 @@ public class TourDaoImpl extends AbstractDao<Tour>{
 			Tour tour = new Tour();
 			tour.setId(resultSet.getInt(PARAM_TOUR_ID));
 			tour.setHeading(resultSet.getString(PARAM_TOUR_HEADING));
-			tour.setText(resultSet.getString(PARAM_TOUR_TEXT));
+			//tour.setText(resultSet.getString(PARAM_TOUR_TEXT));
 			tour.setDuration(resultSet.getInt(PARAM_TOUR_DURATION));
 			tour.setPrice(resultSet.getInt(PARAM_TOUR_PRICE));
 			tours.add(tour);

@@ -4,14 +4,22 @@ import java.io.Serializable;
 
 public class Role implements Serializable{
 	private static final long serialVersionUID = 2516728215910802677L;
-	private int id;
+	private Integer id;
 	private String name;
 	
-	public int getId() {
+	public Role(){
+	}
+	
+	public Role(Integer id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+
+	public Integer getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	
@@ -27,7 +35,7 @@ public class Role implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -41,7 +49,10 @@ public class Role implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Role other = (Role) obj;
-		if (id != other.id)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		if (name == null) {
 			if (other.name != null)

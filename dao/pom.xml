@@ -42,6 +42,7 @@
     	<artifactId>entity</artifactId>
     	<version>1.0</version>
     </dependency>
+    <!-- Log4j -->
     <dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>

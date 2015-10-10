@@ -1,20 +1,33 @@
 package by.agency.travel.entity;
 
 import java.io.Serializable;
-import java.util.List;
+
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 public class Tour implements Serializable{
+	
 	private static final long serialVersionUID = 2632896625047356589L;
+	
 	private Integer id;
+	
+	@NotBlank(message = "{NotBlank.heading}")
 	private String heading;
-	private List<String> paragraphs;
+	
+	@NotBlank(message = "{NotBlank.paragraphs}")
+	private String paragraphs;
+	
+	@NotNull(message = "{NotNull.duration}")
 	private Integer duration;
+	
+	@NotNull(message = "{NotNull.price}")
 	private Integer price;
 	
 	public Tour(){
 	}
 	
-	public Tour(Integer id, String heading, List<String> paragraphs, Integer duration, Integer price) {
+	public Tour(Integer id, String heading, String paragraphs, Integer duration, Integer price) {
 		this.id = id;
 		this.heading = heading;
 		this.paragraphs = paragraphs;
@@ -38,11 +51,11 @@ public class Tour implements Serializable{
 		this.heading = heading;
 	}
 	
-	public List<String> getParagraphs() {
+	public String getParagraphs() {
         return paragraphs;
     }
 
-    public void setParagraphs(List<String> paragraphs) {
+    public void setParagraphs(String paragraphs) {
         this.paragraphs = paragraphs;
     }
 	

@@ -2,22 +2,44 @@ package by.agency.travel.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public class User implements Serializable{
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+public class User implements Serializable, UserDetails{
+	
 	private static final long serialVersionUID = -5826833143357610172L;
+	
 	private Integer id;
+	
+	@NotBlank(message = "{NotBlank.login}")
 	private String login;
-	private String pass;
+	
+	@NotBlank(message = "{NotBlank.password}")
+	@Pattern(regexp = "(?=.*\\d)(?=.*[A-z]).{6,20}", message = "{Pattern.password}", groups = {RegExp.class})
+	private String password;
+	
 	private List<Role> roles = new ArrayList<Role>();
+	
+	public interface RegExp {
+		
+	}
 	
 	public User(){
 	}
 
-	public User(Integer id, String login, String pass, List<Role> roles) {
+	public User(Integer id, String login, String password, List<Role> roles) {
 		this.id = id;
 		this.login = login;
-		this.pass = pass;
+		this.password = password;
 		this.roles = roles;
 	}
 
@@ -37,12 +59,8 @@ public class User implements Serializable{
 		this.login = login;
 	}
 
-	public String getPass() {
-		return pass;
-	}
-
-	public void setPass(String pass) {
-		this.pass = pass;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public List<Role> getRoles() {
@@ -63,7 +81,7 @@ public class User implements Serializable{
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
-		result = prime * result + ((pass == null) ? 0 : pass.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((roles == null) ? 0 : roles.hashCode());
 		return result;
 	}
@@ -87,10 +105,10 @@ public class User implements Serializable{
 				return false;
 		} else if (!login.equals(other.login))
 			return false;
-		if (pass == null) {
-			if (other.pass != null)
+		if (password == null) {
+			if (other.password != null)
 				return false;
-		} else if (!pass.equals(other.pass))
+		} else if (!password.equals(other.password))
 			return false;
 		if (roles == null) {
 			if (other.roles != null)
@@ -102,6 +120,45 @@ public class User implements Serializable{
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", login=" + login + ", pass=" + pass + ", roles=" + roles + "]";
+		return "User [id=" + id + ", login=" + login + ", pass=" + password + ", roles=" + roles + "]";
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		Set<SimpleGrantedAuthority> rolesSet =  new HashSet<>();
+		for(Role role : roles){
+			rolesSet.add(new SimpleGrantedAuthority(role.getName()));
+		}
+		return rolesSet;
+	}
+
+	@Override
+	public String getPassword() {
+		return password;
+	}
+
+	@Override
+	public String getUsername() {
+		return login;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 }

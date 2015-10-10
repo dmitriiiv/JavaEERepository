@@ -1,4 +1,4 @@
--- --------------------------------------------------------
+﻿-- --------------------------------------------------------
 -- Хост:                         127.0.0.1
 -- Версия сервера:               5.6.25-log - MySQL Community Server (GPL)
 -- ОС Сервера:                   Win64
@@ -56,8 +56,8 @@ INSERT INTO `tours` (`id`, `heading`, `text`, `duration`, `price`) VALUES
 -- Дамп структуры для таблица tours_app.users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `login` varchar(20) NOT NULL,
-  `pass` varchar(32) NOT NULL,
+  `login` varchar(255) NOT NULL,
+  `pass` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 

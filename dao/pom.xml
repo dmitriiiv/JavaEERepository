@@ -11,80 +11,59 @@
   <artifactId>dao</artifactId>
   <version>1.0</version>
   <name>dao</name>
-  <url>http://maven.apache.org</url>
+  
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <jdk.version>1.7</jdk.version>
+    <junit.version>4.12</junit.version>
+    <spring.test>3.2.4.RELEASE</spring.test>
+    <mysql.version>5.1.29</mysql.version>
+    <spring.data>1.3.4.RELEASE</spring.data>
+    <hb.manager>4.2.5.Final</hb.manager>
   </properties>
+  
   <dependencies>
-    <!-- JUnit -->
+  	<!-- JUnit -->
 	<dependency>
 		<groupId>junit</groupId>
 		<artifactId>junit</artifactId>
-		<version>4.12</version>
+		<version>${junit.version}</version>
 		<scope>test</scope>
 	</dependency>
 	<!-- Database (MySQL) -->
 	<dependency>
 		<groupId>mysql</groupId>
 		<artifactId>mysql-connector-java</artifactId>
-		<version>5.1.36</version>
+		<version>${mysql.version}</version>
 	</dependency>
-	<!-- DataSource (Apache dbcp) -->
-	<dependency>
-		<groupId>commons-dbcp</groupId>
-		<artifactId>commons-dbcp</artifactId>
-		<version>1.4</version>
-	</dependency>	
-	<!-- Entity -->
-   	<dependency>
-    	<groupId>by.agency.travel</groupId>
-    	<artifactId>entity</artifactId>
-    	<version>1.0</version>
-    </dependency>
     <!-- Log4j -->
     <dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>1.2.17</version>
 	</dependency>
+	<!-- Spring Test -->
+	<dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-test</artifactId>
+        <version>${spring.test}</version>
+        <scope>test</scope>
+    </dependency>
+    <!-- Spring Data -->
+    <dependency>
+        <groupId>org.springframework.data</groupId>
+        <artifactId>spring-data-jpa</artifactId>
+        <version>${spring.data}</version>
+    </dependency>
+    <!-- Hibernate Manager -->
+    <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-entitymanager</artifactId>
+        <version>${hb.manager}</version>
+    </dependency> 
+    <dependency>
+		<groupId>cglib</groupId>
+		<artifactId>cglib</artifactId>
+		<version>3.1</version>
+	</dependency>    
   </dependencies>
-  
-  <build>
-  <plugins>
-	<plugin>
-  		<groupId>org.apache.maven.plugins</groupId>
-  		<artifactId>maven-jar-plugin</artifactId>
-  		<version>2.6</version>
-  		<configuration>
-			<archive>
-				<manifest>
-					<addClasspath>true</addClasspath>
-					<classpathPrefix>lib</classpathPrefix>
-					<mainClass>by.agency.travel.dao.App</mainClass>
-				</manifest>
-			</archive>
- 		</configuration>
-	 </plugin>
-	 <plugin>
-	 	<groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <version>2.10</version>
-        <executions>
-           <execution>
-               <id>copy</id>
-               <phase>install</phase>
-                <goals>
-                   <goal>copy-dependencies</goal>
-                 </goals>
-                 <configuration>
-                   <outputDirectory>
-                     ${project.build.directory}/lib
-                    </outputDirectory>
-                  </configuration>
-             </execution>
-         </executions>
-	 </plugin>
-  </plugins>
-  </build>
 </project>

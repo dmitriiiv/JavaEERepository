@@ -1,6 +1,6 @@
 MKDIR d:\project\
 cd /d d:\project\
-git clone -b develop git@github.com:dmitriiiv/JavaEERepository.git
+git clone -b spring git@github.com:dmitriiiv/JavaEERepository.git
 
 mysql.exe -u root -p < d:\project\JavaEERepository\scripts\travel.sql
 

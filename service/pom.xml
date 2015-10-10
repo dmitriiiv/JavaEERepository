@@ -14,7 +14,7 @@
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-     <jdk.version>1.7</jdk.version>
+    <spring.security>4.0.2.RELEASE</spring.security>
   </properties>
   <dependencies>
     <dependency>
@@ -32,8 +32,29 @@
     <!-- Dao -->
    	<dependency>
     	<groupId>by.agency.travel</groupId>
-    	<artifactId>hibernate-dao</artifactId>
+    	<artifactId>dao</artifactId>
     	<version>1.0</version>
+    </dependency>
+    <!-- Spring -->
+    <dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-context</artifactId>
+		<version>${spring.security}</version>
+	</dependency> 
+	<dependency>
+      	<groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-core</artifactId>
+        <version>${spring.security}</version>
+    </dependency>  
+    <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-web</artifactId>
+        <version>${spring.security}</version>
+   	</dependency>
+	<dependency>
+  		<groupId>org.springframework.security</groupId>
+		<artifactId>spring-security-config</artifactId>
+		<version>${spring.security}</version>
     </dependency>
     <!-- MD5 -->
     <dependency>
@@ -47,5 +68,10 @@
   		<artifactId>jmock-junit4</artifactId>
   		<version>2.8.1</version>
 	</dependency>
+	<dependency>
+     	<groupId>javax.inject</groupId>
+  		<artifactId>javax.inject</artifactId>
+      	<version>1</version>
+   	</dependency>
   </dependencies>
 </project>

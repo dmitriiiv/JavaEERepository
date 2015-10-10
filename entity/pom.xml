@@ -15,6 +15,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <jdk.version>1.7</jdk.version>
+    <spring.security>4.0.2.RELEASE</spring.security>
   </properties>
   <dependencies>
     <dependency>
@@ -23,6 +24,31 @@
       <version>4.12</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+    	<groupId>org.springframework.security</groupId>
+       	<artifactId>spring-security-core</artifactId>
+       	<version>${spring.security}</version>
+   	</dependency>
+    <dependency>
+       	<groupId>org.springframework.security</groupId>
+   		<artifactId>spring-security-web</artifactId>
+   		<version>${spring.security}</version>
+   	</dependency>
+   	<dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-config</artifactId>
+        <version>${spring.security}</version>
+    </dependency>
+    <dependency>
+       	<groupId>javax.validation</groupId>
+     	<artifactId>validation-api</artifactId>
+  		<version>1.1.0.Final</version>
+  	</dependency>
+  	<dependency>
+       	<groupId>org.hibernate</groupId>
+   		<artifactId>hibernate-validator</artifactId>
+		<version>5.2.1.Final</version>
+    </dependency>
   </dependencies>
-
+  
 </project>

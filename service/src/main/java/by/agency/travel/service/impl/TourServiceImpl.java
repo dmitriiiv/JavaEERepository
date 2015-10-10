@@ -1,67 +1,77 @@
 package by.agency.travel.service.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import org.apache.log4j.Logger;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
+import by.agency.travel.dao.pojo.TourPojo;
+import by.agency.travel.dao.repository.TourRepository;
 import by.agency.travel.entity.Tour;
-import by.agency.travel.hibernate.dao.GenericDao;
-import by.agency.travel.hibernate.dao.exception.DaoException;
 import by.agency.travel.service.TourService;
-import by.agency.travel.service.exception.ServiceException;
 
+@Service
 public class TourServiceImpl implements TourService{
+	
 	private static final Logger LOGGER = Logger.getLogger(TourServiceImpl.class);
-	private GenericDao<Tour> dao;
 	
+	@Inject
+	private TourRepository tourRepository;
 	
-	public TourServiceImpl(GenericDao<Tour> dao) {
-		LOGGER.info("Run TourServiceImpl method");
-		this.dao = dao;
-	}
-
 	@Override
-	public List<Tour> findTours() throws ServiceException {
-		LOGGER.info("Run findTour method");
-		try {
-			return dao.readAll();
-		} catch (DaoException e) {
-			LOGGER.error("Cannot find all tour", e);
-			throw new ServiceException("Cannot find all tour", e);
+	public List<Tour> findTours() {
+		LOGGER.info("Run findTours method");
+		List<Tour> tours = new ArrayList<>();
+		for(TourPojo pojo : tourRepository.findAll(new Sort(Sort.Direction.DESC, "id"))){
+			tours.add(transformPojoToVO(pojo));
 		}
+		return tours;
 	}
 
 	@Override
-	public Tour findTourById(int id) throws ServiceException {
+	public Tour findTourById(int id) {
 		LOGGER.info("Run findTourById method, id=" + id);
-		try {
-			return dao.read(id);
-		} catch (DaoException e) {
-			LOGGER.error("Cannot find tour by id = " + id, e);
-			throw new ServiceException("Cannot find tour by id = " + id, e);
-		}
+		return transformPojoToVO(tourRepository.findOne(id));
 	}
 
 	@Override
-	public Integer addTour(String heading, String text, int duration, int price) throws ServiceException {
+	public Integer addTour(Tour entity) {
 		LOGGER.info("Run addTour method");
-		Tour tour = new Tour();
-		tour.setHeading(heading);
-		tour.setParagraphs(transformTextToParagraphs(text));
-		tour.setDuration(duration);
-		tour.setPrice(price);
-		try {
-			return dao.create(tour);
-		} catch (DaoException e) {
-			LOGGER.error("Cannot add tour = " + tour , e);
-			throw new ServiceException("Cannot add tour = " + tour , e);
+		TourPojo pojo = transformVOToPojo(entity);
+		return tourRepository.saveAndFlush(pojo).getId();
+	}
+	
+	@Override
+	public void delete(int id){
+		LOGGER.info("Run delete method");
+		tourRepository.delete(id);
+	}
+	
+	private Tour transformPojoToVO(TourPojo pojo){
+		LOGGER.info("Run transformPojoToVO method");
+		if(pojo == null){
+			return null;
+		} else {
+			return new Tour(pojo.getId(), pojo.getHeading(), pojo.getText(), pojo.getDuration(), pojo.getPrice());
 		}
 	}
 	
-	private List<String> transformTextToParagraphs(String text) {
+	private TourPojo transformVOToPojo(Tour entity){
+		LOGGER.info("Run transformVOToPojo method");
+		if(entity == null){
+			return null;
+		} else {
+			return new TourPojo(entity.getId(), entity.getHeading(), entity.getParagraphs(), entity.getDuration(), entity.getPrice());
+		}
+	}
+	
+	/*private List<String> transformTextToParagraphs(String text) {
+		LOGGER.info("Run transformTextToParagraphs method");
         String[] paragraphs = text.split("\n");
         return new ArrayList<String>(Arrays.asList(paragraphs));
-    }
+    }*/
 }

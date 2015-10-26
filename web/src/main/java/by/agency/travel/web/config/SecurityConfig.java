@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.invalidateHttpSession(true);
 		
 		http.authorizeRequests()
-			.antMatchers("/addtour").access("hasRole('admin')")
+			.antMatchers("/add").access("hasRole('admin')")
 			.and()
 			.formLogin()
 			.defaultSuccessUrl("/tourfeed", false);

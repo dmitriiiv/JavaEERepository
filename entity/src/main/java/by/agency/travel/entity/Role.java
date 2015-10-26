@@ -5,14 +5,14 @@ import java.io.Serializable;
 public class Role implements Serializable{
 	private static final long serialVersionUID = 2516728215910802677L;
 	private Integer id;
-	private String name;
+	private String roleName;
 	
 	public Role(){
 	}
 	
 	public Role(Integer id, String name) {
 		this.id = id;
-		this.name = name;
+		this.roleName = name;
 	}
 
 	public Integer getId() {
@@ -23,12 +23,12 @@ public class Role implements Serializable{
 		this.id = id;
 	}
 	
-	public String getName() {
-		return name;
+	public String getRoleName() {
+		return roleName;
 	}
 	
-	public void setName(String name) {
-		this.name = name;
+	public void setRoleName(String name) {
+		this.roleName = name;
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class Role implements Serializable{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((roleName == null) ? 0 : roleName.hashCode());
 		return result;
 	}
 
@@ -54,16 +54,16 @@ public class Role implements Serializable{
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (name == null) {
-			if (other.name != null)
+		if (roleName == null) {
+			if (other.roleName != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!roleName.equals(other.roleName))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Role [id=" + id + ", name=" + name + "]";
+		return "Role [id=" + id + ", name=" + roleName + "]";
 	}
 }

@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
 -- Дамп данных таблицы tours_app.roles: ~2 rows (приблизительно)
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
 INSERT INTO `roles` (`id`, `name`) VALUES
-	(1, 'administrator'),
+	(1, 'admin'),
 	(2, 'user');
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 
@@ -64,8 +64,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Дамп данных таблицы tours_app.users: ~2 rows (приблизительно)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `login`, `pass`) VALUES
-	(1, 'login@gmail.com', '5f4dcc3b5aa765d61d8327deb882cf99'),
-	(2, 'admin@gmail.com', '21232f297a57a5a743894a0e4a801fc3');
+	(1, 'login@gmail.com', '$2a$10$cs1VQBl1lyTA8DXBklOkaOmVInw2i3/Do2ZCV6ElqbRGAePWr5FDW'),
+	(2, 'admin@gmail.com', '$2a$10$5rdrVdygDjECl.t0o03kFu1QZhiynh5Wrw2kiUBApA1SGWw8jLyem');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 

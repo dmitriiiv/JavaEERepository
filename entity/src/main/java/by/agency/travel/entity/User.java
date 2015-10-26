@@ -127,7 +127,7 @@ public class User implements Serializable, UserDetails{
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Set<SimpleGrantedAuthority> rolesSet =  new HashSet<>();
 		for(Role role : roles){
-			rolesSet.add(new SimpleGrantedAuthority(role.getName()));
+			rolesSet.add(new SimpleGrantedAuthority(role.getRoleName()));
 		}
 		return rolesSet;
 	}

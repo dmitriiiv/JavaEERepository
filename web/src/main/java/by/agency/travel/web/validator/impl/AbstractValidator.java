@@ -8,6 +8,7 @@ import javax.validation.ConstraintViolation;
 import org.springframework.validation.Errors;
 
 public abstract class AbstractValidator<T> implements org.springframework.validation.Validator{
+	
 	@Inject 
 	private javax.validation.Validator validator;
 	

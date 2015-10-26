@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService{
 		} else {
 			List<RolePojo> roles = new ArrayList<>();
 			for(Role role : entity.getRoles()){
-				roles.add(new RolePojo(role.getId(), role.getName()));
+				roles.add(new RolePojo(role.getId(), role.getRoleName()));
 			}
 			return new UserPojo(entity.getId(), entity.getLogin(), entity.getPassword(), roles);
 		}

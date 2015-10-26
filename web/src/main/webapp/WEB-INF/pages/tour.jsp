@@ -31,7 +31,7 @@
 								<c:if test="${isAuth == true}">
 									<sec:authentication property="principal.roles" var="roles"/>
 									<c:forEach items="${roles}" var="r">
-										<c:if test="${r.name == 'admin'}" >
+										<c:if test="${r.roleName == 'admin'}" >
 											<button type="submit" class="btn btn-default">
 											<fmt:message key="tour.list.submit" />
 										</button>
